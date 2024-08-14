@@ -1,7 +1,7 @@
 package main
 
 import (
-	client "api/src/services/Client"
+	client "api/src/services/Client/Controller"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
