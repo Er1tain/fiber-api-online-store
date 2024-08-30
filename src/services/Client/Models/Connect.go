@@ -1,6 +1,8 @@
 package client_models
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"log"
@@ -28,9 +30,14 @@ func CreateClient(client Client) {
 	//Первичная инициализация таблицы клиентов
 	db.AutoMigrate(&Client{})
 
+	//Шифрование пароля
+	bytePassword := []byte(client.Password)
+	md5Hash := md5.Sum(bytePassword)
+	hash_password := hex.EncodeToString(md5Hash[:])
+
 	//Создание записи в БД
 	db.Create(
-		&Client{Email: client.Email, Surname: client.Surname, Name: client.Name, Password: client.Password},
+		&Client{Email: client.Email, Surname: client.Surname, Name: client.Name, Password: hash_password},
 	)
 
 }
