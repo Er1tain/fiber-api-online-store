@@ -15,12 +15,6 @@ func connect() *gorm.DB {
 		log.Fatal("Failed to connect to database:", err)
 	}
 	return db
-
-	//db.AutoMigrate(&Client{})
-	//
-	////Создаём модельку клиента
-	//client := Client{Surname: "Придава", Name: "Александр", Email: "sanyapridava@mail.ru"}
-	//db.Create(&client)
 }
 
 func CreateClient(client Client) {
@@ -39,5 +33,11 @@ func CreateClient(client Client) {
 	db.Create(
 		&Client{Email: client.Email, Surname: client.Surname, Name: client.Name, Password: hash_password},
 	)
+
+}
+
+func FindClient(email string, password string) {
+	db := connect()
+	defer db.Close()
 
 }
