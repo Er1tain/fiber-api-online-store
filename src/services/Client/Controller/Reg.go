@@ -5,6 +5,7 @@ import (
 	"api/src/shared"
 	"api/src/shared/responses"
 	"log"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
@@ -25,7 +26,7 @@ func (controller ClientController) reg(service fiber.Router) {
 		if client_models.CreateClient(*request) {
 			//Создание jwt-токена
 			token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-				"email": request.Email, "surname": request.Surname, "name": request.Name,
+				"email": request.Email, "surname": request.Surname, "name": request.Name, "createdAt": time.Now(),
 			})
 
 			tokenString, err := token.SignedString(shared.HmacSampleSecret)
