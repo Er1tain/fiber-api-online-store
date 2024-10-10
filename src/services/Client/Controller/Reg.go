@@ -2,8 +2,9 @@ package client
 
 import (
 	client_models "api/src/services/Client/Models"
-	"github.com/gofiber/fiber/v2"
 	"log"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 // Эндпоинт регистрации
@@ -18,9 +19,11 @@ func (controller ClientController) reg(service fiber.Router) {
 		}
 
 		//Создание учётной записи в БД
-		client_models.CreateClient(*response)
+		if client_models.CreateClient(*response) {
+			return c.Status(fiber.StatusOK).JSON(response)
+		}
 
-		return c.Status(fiber.StatusOK).JSON(response)
+		return c.Status(fiber.ErrBadRequest.Code).SendString("Данный email уже используется")
 
 	})
 }

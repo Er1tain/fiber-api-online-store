@@ -3,9 +3,10 @@ package client_models
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"log"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-	"log"
 )
 
 func connect() *gorm.DB {
@@ -17,7 +18,7 @@ func connect() *gorm.DB {
 	return db
 }
 
-func CreateClient(client Client) {
+func CreateClient(client Client) bool {
 	db := connect()
 	defer db.Close()
 
@@ -30,9 +31,11 @@ func CreateClient(client Client) {
 	hash_password := hex.EncodeToString(md5Hash[:])
 
 	//Создание записи в БД
-	db.Create(
+	result := db.Create(
 		&Client{Email: client.Email, Surname: client.Surname, Name: client.Name, Password: hash_password},
 	)
+
+	return result.Error == nil
 
 }
 
