@@ -39,8 +39,24 @@ func CreateClient(client Client) bool {
 
 }
 
-func FindClient(email string, password string) {
+func FindClient(email string, password string) (string, string, bool) {
 	db := connect()
 	defer db.Close()
 
+	//Пароль в форме хэш-кода
+	bytePassword := []byte(password)
+	md5Hash := md5.Sum(bytePassword)
+	hash_password := hex.EncodeToString(md5Hash[:])
+
+	//Поиск записи в БД
+	client := Client{Email: email, Password: hash_password}
+	db.First(&client)
+
+	surname := client.Surname
+	name := client.Name
+
+	log.Println(client)
+	log.Println(hash_password)
+
+	return surname, name, client.Password == hash_password
 }
