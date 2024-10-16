@@ -2,7 +2,9 @@ package main
 
 import (
 	client "api/src/services/Client/Controller"
+	"api/src/shared"
 	"log"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/swagger"
@@ -22,6 +24,13 @@ func main() {
 	api := fiber.New()
 	api.Get("/docs/*", swagger.HandlerDefault)
 	client.Start(api)
+
+	go func() {
+		for {
+			log.Println(shared.Black_list_tokens)
+			time.Sleep(time.Second * 60)
+		}
+	}()
 
 	log.Fatal(api.Listen(":8000"))
 }
