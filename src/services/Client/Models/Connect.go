@@ -55,6 +55,10 @@ func FindClient(email string, password string) (string, string, bool) {
 	surname := client.Surname
 	name := client.Name
 
+	if surname == "" || name == "" {
+		return surname, name, false
+	}
+
 	log.Println(client)
 	log.Println(hash_password)
 
