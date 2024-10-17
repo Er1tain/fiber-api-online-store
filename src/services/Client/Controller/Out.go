@@ -20,6 +20,11 @@ func (controller ClientController) out(service fiber.Router) {
 			return c.SendStatus(fiber.StatusBadRequest)
 		}
 
+		//Если токен просрочен
+		if !shared.CheckToken(request.Token) {
+			return c.SendString("Данный токен уже просрочен!")
+		}
+
 		//Добавление токена авторизации в чс
 		shared.Black_list_tokens = append(shared.Black_list_tokens, request.Token)
 
