@@ -11,10 +11,10 @@ import (
 
 var Black_list_tokens = []string{}
 
-func DeleteDeadTokens(Black_list_tokens *[]string) {
+func DeleteDeadTokens() {
 	new_black_list_tokens := []string{}
 
-	for _, string_token := range *Black_list_tokens {
+	for _, string_token := range Black_list_tokens {
 		//Части токена отделены точкой
 		parts := strings.Split(string_token, ".")
 
@@ -57,5 +57,5 @@ func DeleteDeadTokens(Black_list_tokens *[]string) {
 			new_black_list_tokens = append(new_black_list_tokens, string_token)
 		}
 	}
-	*Black_list_tokens = new_black_list_tokens
+	Black_list_tokens = new_black_list_tokens
 }
