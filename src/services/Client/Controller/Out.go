@@ -21,7 +21,7 @@ func (controller ClientController) out(service fiber.Router) {
 		}
 
 		//Если токен просрочен
-		if !shared.CheckToken(request.Token) {
+		if !shared.CheckTokenLifeTime(request.Token) {
 			return c.SendString("Данный токен уже просрочен!")
 		}
 

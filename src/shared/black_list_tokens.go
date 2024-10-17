@@ -15,7 +15,8 @@ func DeleteDeadTokens() {
 	new_black_list_tokens := []string{}
 
 	for _, string_token := range Black_list_tokens {
-		if CheckToken(string_token) {
+		//На момент добавления в чс время жизни токена могло не истечь
+		if CheckTokenLifeTime(string_token) {
 			new_black_list_tokens = append(new_black_list_tokens, string_token)
 		}
 	}
@@ -23,7 +24,7 @@ func DeleteDeadTokens() {
 }
 
 // false – мёртвый токен
-func CheckToken(string_token string) bool {
+func CheckTokenLifeTime(string_token string) bool {
 	//Части токена отделены точкой
 	parts := strings.Split(string_token, ".")
 
