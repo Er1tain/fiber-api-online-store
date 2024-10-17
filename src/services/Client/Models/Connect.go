@@ -60,3 +60,25 @@ func FindClient(email string, password string) (string, string, bool) {
 
 	return surname, name, client.Password == hash_password
 }
+
+func DeleteClient(client AuthData) bool {
+	db := connect()
+	defer db.Close()
+
+	//Пароль в форме хэш-кода
+	bytePassword := []byte(client.Password)
+	md5Hash := md5.Sum(bytePassword)
+	hash_password := hex.EncodeToString(md5Hash[:])
+
+	//Поиск записи в БД
+	info_client := Client{Email: client.Email, Password: hash_password}
+	db.First(&info_client)
+
+	if info_client.Name == "" || info_client.Surname == "" {
+		return false
+	}
+
+	db.Delete(&info_client)
+	return true
+
+}
