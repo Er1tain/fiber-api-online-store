@@ -2,6 +2,7 @@ package client
 
 import (
 	"api/src/shared"
+	"api/src/shared/validation"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -18,6 +19,11 @@ func (controller ClientController) out(service fiber.Router) {
 		err := c.BodyParser(&request)
 		if err != nil || request.Token == "" {
 			return c.SendStatus(fiber.StatusBadRequest)
+		}
+
+		//Токен сгенерирован данным сервисом?
+		if !validation.ValidateJWT(request.Token) {
+			return c.Status(fiber.StatusBadRequest).SendString("Токен сгенерирован сторонним сервисом!")
 		}
 
 		//Если токен просрочен
