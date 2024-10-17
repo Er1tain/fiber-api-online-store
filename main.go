@@ -27,6 +27,7 @@ func main() {
 
 	go func() {
 		for {
+			shared.DeleteDeadTokens(&shared.Black_list_tokens)
 			log.Println(shared.Black_list_tokens)
 			time.Sleep(time.Second * 60)
 		}
