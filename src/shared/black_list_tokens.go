@@ -23,8 +23,15 @@ func DeleteDeadTokens() {
 	Black_list_tokens = new_black_list_tokens
 }
 
-// false – мёртвый токен
+// false – мёртвый токен или токен в чс
 func CheckTokenLifeTime(string_token string) bool {
+	//Токен уже содержится в чс
+	for _, token_black_list := range Black_list_tokens {
+		if string_token == token_black_list {
+			return false
+		}
+	}
+
 	//Части токена отделены точкой
 	parts := strings.Split(string_token, ".")
 
