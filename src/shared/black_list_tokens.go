@@ -15,15 +15,14 @@ func DeleteDeadTokens() {
 	new_black_list_tokens := []string{}
 
 	for _, string_token := range Black_list_tokens {
-		res := CheckToken(string_token)
-
-		if !res {
+		if CheckToken(string_token) {
 			new_black_list_tokens = append(new_black_list_tokens, string_token)
 		}
 	}
 	Black_list_tokens = new_black_list_tokens
 }
 
+// false – мёртвый токен
 func CheckToken(string_token string) bool {
 	//Части токена отделены точкой
 	parts := strings.Split(string_token, ".")
@@ -63,5 +62,5 @@ func CheckToken(string_token string) bool {
 		return false
 	}
 
-	return month_created != month_current || day_current-day_created > 1
+	return !(month_created != month_current || day_current-day_created > 1)
 }
