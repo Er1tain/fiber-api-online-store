@@ -4,6 +4,7 @@ import (
 	client_models "api/src/services/Client/Models"
 	"api/src/shared"
 	"api/src/shared/responses"
+	"api/src/shared/validation"
 	"log"
 	"time"
 
@@ -20,6 +21,10 @@ func (controller ClientController) auth(service fiber.Router) {
 		err := c.BodyParser(&request)
 		if err != nil {
 			return c.SendStatus(fiber.StatusBadRequest)
+		}
+
+		if !validation.CheckEmail(request.Email) {
+			return c.Status(fiber.StatusBadRequest).SendString("Некорректный email!")
 		}
 
 		//Поиск в БД записи с соответствующими почтой и паролем

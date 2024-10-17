@@ -2,6 +2,7 @@ package client
 
 import (
 	client_models "api/src/services/Client/Models"
+	"api/src/shared/validation"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -16,6 +17,10 @@ func (controller ClientController) delete(service fiber.Router) {
 		err := c.BodyParser(&request)
 		if err != nil {
 			return c.SendStatus(fiber.StatusBadRequest)
+		}
+
+		if !validation.CheckEmail(request.Email) {
+			return c.Status(fiber.StatusBadRequest).SendString("Некорректный email!")
 		}
 
 		//Удаление учётной записи из БД
