@@ -18,5 +18,7 @@ func Start(app *fiber.App) {
 		return c.Next()
 	})
 	store.service = profile
+
 	store.upload()
+	store.download()
 }
