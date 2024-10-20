@@ -5,9 +5,11 @@ import (
 	"api/src/shared"
 	"api/src/shared/responses"
 	"api/src/shared/validation"
+	"fmt"
 	"log"
 	"math/rand"
 	"net/smtp"
+	"os"
 	"strconv"
 	"time"
 
@@ -16,8 +18,9 @@ import (
 )
 
 func sendRegCode(email_addressee string, code *int) bool {
-	from := "sanyapridava@mail.ru"
-	password := "e6Ds5aTimK0ZgutjLkSM"
+	from := os.Getenv("MAIL")
+	password := os.Getenv("PASSWD")
+	fmt.Println(from + " " + password)
 
 	toList := []string{email_addressee}
 
