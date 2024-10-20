@@ -2,6 +2,7 @@ package main
 
 import (
 	client "api/src/services/Client/Controller"
+	profile "api/src/services/Profile/Controller"
 	"api/src/shared"
 	"log"
 	"time"
@@ -23,7 +24,9 @@ import (
 func main() {
 	api := fiber.New()
 	api.Get("/docs/*", swagger.HandlerDefault)
+
 	client.Start(api)
+	profile.Start(api)
 
 	go func() {
 		for {
