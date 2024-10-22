@@ -15,15 +15,9 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/joho/godotenv"
 )
 
 func sendRegCode(email_addressee string, code *int) bool {
-	err := godotenv.Load()
-	if err != nil {
-		panic("Ошибка загрузки .env файла")
-	}
-
 	from := os.Getenv("MAIL")
 	password := os.Getenv("PASSWD")
 	fmt.Println(from + " " + password)
@@ -41,7 +35,7 @@ func sendRegCode(email_addressee string, code *int) bool {
 
 	auth := smtp.PlainAuth("", from, password, host)
 
-	err = smtp.SendMail(host+":"+port, auth, from, toList, body)
+	err := smtp.SendMail(host+":"+port, auth, from, toList, body)
 
 	return err == nil
 }
