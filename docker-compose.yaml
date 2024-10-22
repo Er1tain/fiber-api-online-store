@@ -19,6 +19,10 @@ services:
       context: .
       dockerfile: Dockerfile
 
+    environment:
+      - MAIL=sanyapridava@mail.ru
+      - PASSWD=FWG43ewf3
+
     networks:
       - online_store
     ports:
