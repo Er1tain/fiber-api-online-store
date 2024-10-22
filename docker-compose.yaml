@@ -9,6 +9,8 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "userpass"
 
+    networks:
+      - online_store
     ports:
       - "5432:5432"
 
@@ -17,6 +19,8 @@ services:
       context: .
       dockerfile: Dockerfile
 
+    networks:
+      - online_store
     ports:
       - "8000:8000"
 
@@ -25,6 +29,9 @@ services:
 
   nginx:
     image: nginx:latest
+
+    networks:
+      - online_store
     ports:
       - "80:80"
 
@@ -35,6 +42,11 @@ services:
       - api  
 
     restart: always
+
+networks:
+  online_store:
+    driver: bridge
+    
 
 
   
