@@ -11,8 +11,8 @@ services:
 
     networks:
       - online_store
-    ports:
-      - "5432:5432"
+    expose:
+      - "5432"
 
   api:
     build: 
@@ -25,8 +25,8 @@ services:
 
     networks:
       - online_store
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
 
     depends_on:
       - db
