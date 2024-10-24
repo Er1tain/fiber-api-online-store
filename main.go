@@ -1,6 +1,7 @@
 package main
 
 import (
+	admin "api/src/admin/controller"
 	client "api/src/services/Client/Controller"
 	profile "api/src/services/Profile/Controller"
 	"api/src/shared"
@@ -24,6 +25,9 @@ import (
 func main() {
 	api := fiber.New()
 	api.Get("/docs/*", swagger.HandlerDefault)
+
+	//запуск админки
+	admin.Start(api)
 
 	client.Start(api)
 	profile.Start(api)
